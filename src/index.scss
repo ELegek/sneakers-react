@@ -102,6 +102,8 @@ header {
 
 .drawer {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   width: 420px;
   height: 100%;
   right: 0;
@@ -114,22 +116,76 @@ header {
   }
 }
 
-.cartTotalBlock {
-  li {
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 20px;
+.items {
+  flex: 1;
+  overflow: auto;
+  margin-bottom: 40px;
+}
 
-    div {
-      flex: 1;
-      height: 1px;
-      border-bottom: 1px dashed #dfdfdf;
-      position: relative;
-      top: -4px;
-      margin: 0 7px;
+.cartTotalBlock {
+  ul {
+    margin-bottom: 40px !important;
+
+    li {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 20px;
+
+      div {
+        flex: 1;
+        height: 1px;
+        border-bottom: 1px dashed #dfdfdf;
+        position: relative;
+        top: -4px;
+        margin: 0 7px;
+      }
     }
   }
 
+  .greenButton {
+    position: relative;
+
+    @media (any-hover: hover) {
+      &:hover {
+        img {
+          transform: translateX(5px);
+        }
+      }
+    }
+
+    img {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      transition: all .15s ease 0s;
+    }
+  }
+
+}
+
+.greenButton {
+  width: 100%;
+  height: 55px;
+  background: #9DD558;
+  border-radius: 18px;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .3s ease 0s;
+
+
+
+  @media (any-hover: hover) {
+    &:hover {
+      background: lighten(#9DD558, 5%);
+    }
+  }
+
+  &:active {
+    background: darken(#9DD558, 5%);
+  }
 
 }
 
