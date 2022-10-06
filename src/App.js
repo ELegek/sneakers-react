@@ -8,19 +8,25 @@ function App() {
 				<div className='drawer'>
 					<h2>Корзина</h2>
 
-					<div className='cartItem'>
-						<div>
-							<img src='/img/sneakers/sneakers-1.png' alt='' />
-						</div>
+					<div className='items'>
+						<div className='cartItem'>
+							<div>
+								<img src='/img/sneakers/sneakers-1.png' alt='' />
+							</div>
 
-						<div>
-							<p>Мужские Кроссовки Nike Air Max 270</p>
-							<b>12 999 руб.</b>
+							<div>
+								<p>Мужские Кроссовки Nike Air Max 270</p>
+								<b>12 999 руб.</b>
+							</div>
+							<button className='btn-remove'>
+								<FaTimes className='remove-icon' />
+							</button>
 						</div>
-						<button className='btn-remove'>
-							<FaTimes className='remove-icon' />
-						</button>
 					</div>
+
+					<ul>
+						<li></li>
+					</ul>
 				</div>
 			</div>
 
