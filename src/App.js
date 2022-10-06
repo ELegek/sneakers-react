@@ -1,57 +1,116 @@
-import React from "react";
-import Card from "./components/Card";
-import Header from "./components/Header";
-import Drawer from "./components/Drawer";
+import React from 'react';
+import { FaShoppingCart, FaUserCircle, FaPlus, FaSearch, FaTimes } from 'react-icons/fa';
 
 function App() {
-  const [items, setItems] = React.useState([]);
-  const [cartItems, setCartItems] = React.useState([]);
-  const [cartOpened, setCartOpened] = React.useState(false);
+	return (
+		<div className='wrapper clear'>
+			<div className='overlay'>
+				<div className='drawer'>
+					<h2>Корзина</h2>
 
-  React.useEffect(() => {
-    fetch("https://61ab20d0bfb110001773f3c0.mockapi.io/items")
-      .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        setItems(json);
-      });
-  }, []);
+					<div className='cartItem'>
+						<div>
+							<img src='/img/sneakers/sneakers-1.png' alt='' />
+						</div>
 
-  const onAddToCart = (obj) => {
-    setCartItems((prev) => [...prev, obj]);
-  };
+						<div>
+							<p>Мужские Кроссовки Nike Air Max 270</p>
+							<b>12 999 руб.</b>
+						</div>
+						<button className='btn-remove'>
+							<FaTimes className='remove-icon' />
+						</button>
+					</div>
+				</div>
+			</div>
 
-  return (
-    <div className="wrapper clear">
-      {cartOpened && (
-        <Drawer items={cartItems} onClose={() => setCartOpened(false)} />
-      )}
-      <Header onClickCart={() => setCartOpened(true)} />
+			<header className='d-flex justify-between align-center p-40'>
+				<div className='d-flex align-center'>
+					<img width={40} height={40} src='/img/logo.png' alt='logo' className='mr-15' />
+					<div>
+						<h3 className='text-uppercase'>REACT SNEAKERS</h3>
+						<p>Магазин лучших кроссовок</p>
+					</div>
+				</div>
+				<ul className='d-flex'>
+					<li className='mr-30'>
+						<FaShoppingCart className='icon' />
+						<span>1205 руб.</span>
+					</li>
+					<li>
+						<FaUserCircle className='icon' />
+					</li>
+				</ul>
+			</header>
+			<div className='content p-40'>
+				<div className='d-flex align-center mb-40 justify-between'>
+					<h1 className=''>Все кроссовки</h1>
+					<div className='search-block'>
+						<FaSearch className='search-icon' />
+						<input placeholder='Поиск...' />
+					</div>
+				</div>
 
-      <div className="content p-40">
-        <div className="d-flex align-center mb-40 justify-between">
-          <h1>Все кроссовки</h1>
-          <div className="search-block d-flex">
-            <img src="/img/search.svg" alt="Search" />
-            <input type="text" placeholder="Поиск..." />
-          </div>
-        </div>
-
-        <div className="d-flex flex-wrap">
-          {items.map((item) => (
-            <Card
-              title={item.title}
-              price={item.price}
-              imageUrl={item.imageUrl}
-              onFavorite={() => console.log("Добавили в закладки")}
-              onPlus={(obj) => onAddToCart(obj)}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+				<div className='content-wrapper'>
+					<div className='card'>
+						<div className='favorite'>
+							<img src='/img/heart-unliked.svg' alt='Unliked' />
+						</div>
+						<img width={133} height={112} src='/img/sneakers/sneakers-1.png' alt='Sneakers' />
+						<h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+						<div className='d-flex justify-between align-center'>
+							<div className='d-flex flex-column '>
+								<span>Цена:</span>
+								<b>12 999 руб.</b>
+							</div>
+							<button className='button'>
+								<FaPlus className='btnPlus' />
+							</button>
+						</div>
+					</div>
+					<div className='card'>
+						<img width={133} height={112} src='/img/sneakers/sneakers-2.png' alt='Sneakers' />
+						<h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+						<div className='d-flex justify-between align-center'>
+							<div className='d-flex flex-column '>
+								<span>Цена:</span>
+								<b>12 999 руб.</b>
+							</div>
+							<button className='button'>
+								<FaPlus className='btnPlus' />
+							</button>
+						</div>
+					</div>
+					<div className='card'>
+						<img width={133} height={112} src='/img/sneakers/sneakers-3.png' alt='Sneakers' />
+						<h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+						<div className='d-flex justify-between align-center'>
+							<div className='d-flex flex-column '>
+								<span>Цена:</span>
+								<b>12 999 руб.</b>
+							</div>
+							<button className='button'>
+								<FaPlus className='btnPlus' />
+							</button>
+						</div>
+					</div>
+					<div className='card'>
+						<img width={133} height={112} src='/img/sneakers/sneakers-4.png' alt='Sneakers' />
+						<h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+						<div className='d-flex justify-between align-center'>
+							<div className='d-flex flex-column '>
+								<span>Цена:</span>
+								<b>12 999 руб.</b>
+							</div>
+							<button className='button'>
+								<FaPlus className='btnPlus' />
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default App;
