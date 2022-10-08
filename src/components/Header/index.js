@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
+import style from './Header.module.scss';
 
 function Header() {
 	return (
