@@ -27,30 +27,10 @@ body {
 	}
 }
 
-.button {
-	background: #ffffff;
-	border: 1px solid #f2f2f2;
-	border-radius: 8px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 32px;
-	height: 32px;
-	cursor: pointer;
-
-	.btnPlus {
-		color: #d3d3d3;
-		font-size: 12px;
-	}
-}
-
 .content-wrapper {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 	gap: 40px;
-	@media (max-width: 991px) {
-		grid-template-columns: 1fr 1fr 1fr;
-	}
 }
 
 .search-block {

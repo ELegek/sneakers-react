@@ -2,31 +2,35 @@ import React from 'react';
 import { FaTimes, FaArrowRight } from 'react-icons/fa';
 import styles from './Drawer.module.scss';
 
-function Drawer() {
+function Drawer(props) {
 	return (
 		<div className={styles.overlay}>
 			<div className={styles.drawer}>
 				<div className={styles.drawerHeader}>
 					<h2>Корзина</h2>
-					<button className={styles.btnRemove}>
-						<FaTimes className='remove-icon' />
+					<button
+						onClick={props.onClose}
+						className={styles.btnRemove}>
+						<FaTimes className={styles.removeIcon} />
 					</button>
 				</div>
 
 				<div className={styles.items}>
-					<div className={styles.cartItem}>
-						<div>
-							<img src='/img/sneakers/sneakers-1.png' alt='' />
-						</div>
+					{props.items.map((obj) => {
+						<div className={styles.cartItem}>
+							<div>
+								<img src='/img/sneakers/sneakers-1.png' alt='' />
+							</div>
 
-						<div>
-							<p>Мужские Кроссовки Nike Air Max 270</p>
-							<b>12 999 руб.</b>
-						</div>
-						<button className={styles.btnRemove}>
-							<FaTimes className='remove-icon' />
-						</button>
-					</div>
+							<div>
+								<p>Мужские Кроссовки Nike Air Max 270</p>
+								<b>12 999 руб.</b>
+							</div>
+							<button className={styles.btnRemove}>
+								<FaTimes className={styles.removeIcon} />
+							</button>
+						</div>;
+					})}
 				</div>
 				<div className={styles.cartTotalBlock}>
 					<ul>
@@ -42,7 +46,8 @@ function Drawer() {
 						</li>
 					</ul>
 					<button className={styles.greenBtn}>
-						Оформить заказ <FaArrowRight className='arrowRight-icon' />
+						Оформить заказ{' '}
+						<FaArrowRight className={styles.arrowRightIcon} />
 					</button>
 				</div>
 			</div>
