@@ -6,7 +6,8 @@ import Header from './components/Header';
 
 function App() {
 	const [items, setItems] = useState([]);
-	const [cartItems, setCartItams] = useState([]);
+	const [cartItems, setCartItems] = useState([]);
+	const [searchValue, setSearchValue] = useState([]);
 	const [cartOpened, setCartOpened] = useState(false);
 
 	useEffect(() => {
@@ -19,15 +20,28 @@ function App() {
 			});
 	}, []);
 
+	const onAddToCart = (obj) => {
+		setCartItems((prev) => [...prev, obj]);
+	};
+
+	const onChangeSearchInput = (event) => {
+		setSearchValue();
+	};
+
 	return (
 		<div className='wrapper clear'>
-			{cartOpened && <Drawer onClose={() => setCartOpened(false)} />}
+			{cartOpened && (
+				<Drawer
+					items={cartItems}
+					onClose={() => setCartOpened(false)}
+				/>
+			)}
 
 			<Header onClickCart={() => setCartOpened(true)} />
 
 			<div className='content p-40'>
 				<div className='d-flex align-center mb-40 justify-between'>
-					<h1 className=''>Все кроссовки</h1>
+					<h1>Все кроссовки</h1>
 					<div className='search-block'>
 						<FaSearch className='search-icon' />
 						<input placeholder='Поиск...' />
@@ -35,11 +49,14 @@ function App() {
 				</div>
 
 				<div className='content-wrapper'>
-					{items.map((obj) => (
+					{items.map((item, index) => (
 						<Card
-							title={obj.title}
-							price={obj.price}
-							imageUrl={obj.imageUrl}
+							key={index}
+							title={item.title}
+							price={item.price}
+							imageUrl={item.imageUrl}
+							onPlus={(obj) => onAddToCart(obj)}
+							onFavorite={() => console.log('нажали на favorite')}
 						/>
 					))}
 				</div>

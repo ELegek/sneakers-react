@@ -2,35 +2,33 @@ import React from 'react';
 import { FaTimes, FaArrowRight } from 'react-icons/fa';
 import styles from './Drawer.module.scss';
 
-function Drawer(props) {
+function Drawer({ onClose, items = [] }) {
 	return (
 		<div className={styles.overlay}>
 			<div className={styles.drawer}>
 				<div className={styles.drawerHeader}>
 					<h2>Корзина</h2>
-					<button
-						onClick={props.onClose}
-						className={styles.btnRemove}>
+					<button onClick={onClose} className={styles.btnRemove}>
 						<FaTimes className={styles.removeIcon} />
 					</button>
 				</div>
 
 				<div className={styles.items}>
-					{props.items.map((obj) => {
+					{items.map((obj) => (
 						<div className={styles.cartItem}>
 							<div>
-								<img src='/img/sneakers/sneakers-1.png' alt='' />
+								<img src={obj.imageUrl} alt='' />
 							</div>
 
 							<div>
-								<p>Мужские Кроссовки Nike Air Max 270</p>
-								<b>12 999 руб.</b>
+								<p>{obj.title}</p>
+								<b>{obj.price} руб.</b>
 							</div>
 							<button className={styles.btnRemove}>
 								<FaTimes className={styles.removeIcon} />
 							</button>
-						</div>;
-					})}
+						</div>
+					))}
 				</div>
 				<div className={styles.cartTotalBlock}>
 					<ul>
