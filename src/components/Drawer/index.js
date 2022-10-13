@@ -13,43 +13,60 @@ function Drawer({ onRemove, onClose, items = [] }) {
 					</button>
 				</div>
 
-				<div className={styles.items}>
-					{items.map((obj) => (
-						<div className={styles.cartItem}>
-							<div>
-								<img src={obj.imageUrl} alt='' />
-							</div>
+				{items.length > 0 ? (
+					<div>
+						<div className={styles.items}>
+							{items.map((obj) => (
+								<div className={styles.cartItem}>
+									<div>
+										<img src={obj.imageUrl} alt='' />
+									</div>
 
-							<div>
-								<p>{obj.title}</p>
-								<b>{obj.price} руб.</b>
-							</div>
-							<button
-								onClick={() => onRemove(obj.id)}
-								className={styles.btnRemove}>
-								<FaTimes className={styles.removeIcon} />
+									<div>
+										<p>{obj.title}</p>
+										<b>{obj.price} руб.</b>
+									</div>
+									<button
+										onClick={() => onRemove(obj.id)}
+										className={styles.btnRemove}>
+										<FaTimes className={styles.removeIcon} />
+									</button>
+								</div>
+							))}
+						</div>
+
+						<div className={styles.cartTotalBlock}>
+							<ul>
+								<li className={styles.cartBotom}>
+									<span>Итого</span>
+									<div></div>
+									<b>21 498 руб.</b>
+								</li>
+								<li className={styles.cartBotom}>
+									<span>Налог 5%: </span>
+									<div></div>
+									<b>1074 руб.</b>
+								</li>
+							</ul>
+							<button className={styles.greenBtn}>
+								Оформить заказ{' '}
+								<FaArrowRight className={styles.arrowRightIcon} />
 							</button>
 						</div>
-					))}
-				</div>
-				<div className={styles.cartTotalBlock}>
-					<ul>
-						<li className={styles.cartBotom}>
-							<span>Итого</span>
-							<div></div>
-							<b>21 498 руб.</b>
-						</li>
-						<li className={styles.cartBotom}>
-							<span>Налог 5%: </span>
-							<div></div>
-							<b>1074 руб.</b>
-						</li>
-					</ul>
-					<button className={styles.greenBtn}>
-						Оформить заказ{' '}
-						<FaArrowRight className={styles.arrowRightIcon} />
-					</button>
-				</div>
+					</div>
+				) : (
+					<div className='cartEmpty d-flex align-center justify-center flex-column flex'>
+						<img src='/img/empty-cart.jpg' alt='' />
+						<h2>Корзина пустая</h2>
+						<p className='opacity-6'>
+							Добавьте хотябы одну пару кросовок чтобы сделать заказ.
+						</p>
+						<button onClick={onClose} className={styles.greenBtn}>
+							Вернуться назад{' '}
+							<FaArrowRight className={styles.arrowRightIcon} />
+						</button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

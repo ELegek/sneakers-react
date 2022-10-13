@@ -11,7 +11,7 @@ function Card({ title, imageUrl, price, onFavorite, onPlus }) {
 	};
 
 	const onClickFavorite = () => {
-		onFavorite();
+		onFavorite({ title, imageUrl, price });
 		setIsFavorite(!isFavorite);
 	};
 	return (

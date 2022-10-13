@@ -1,5 +1,10 @@
 import React from 'react';
-import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
+import {
+	FaShoppingCart,
+	FaUserCircle,
+	FaRegHeart,
+} from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import style from './Header.module.scss';
 
 function Header(props) {
@@ -22,6 +27,11 @@ function Header(props) {
 				<li onClick={props.onClickCart} className='mr-30 cu-p'>
 					<FaShoppingCart className='icon' />
 					<span>1205 руб.</span>
+				</li>
+				<li>
+					<Link to='/favorites'>
+						<FaRegHeart className='icon' />
+					</Link>
 				</li>
 				<li>
 					<FaUserCircle className='icon' />
