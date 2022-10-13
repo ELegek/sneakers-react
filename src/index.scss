@@ -41,6 +41,17 @@ body {
 	gap: 5px;
 	padding: 0px 16px;
 
+	position: relative;
+
+	.remove-icon {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		cursor: pointer;
+		color: #e4e4e4;
+		border: 1px solid #f3f3f3;
+	}
+
 	.search-icon {
 		color: #e4e4e4;
 	}

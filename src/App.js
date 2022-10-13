@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaTimes } from 'react-icons/fa';
+import axios from 'axios';
 import Card from './components/Card';
 import Drawer from './components/Drawer';
 import Header from './components/Header';
@@ -11,21 +12,41 @@ function App() {
 	const [cartOpened, setCartOpened] = useState(false);
 
 	useEffect(() => {
-		fetch('https://6342ac4c3f83935a78472565.mockapi.io/items')
+		axios
+			.get('https://6342ac4c3f83935a78472565.mockapi.io/items')
 			.then((res) => {
-				return res.json();
-			})
-			.then((json) => {
-				setItems(json);
+				setItems(res.data);
+			});
+
+		axios
+			.get('https://6342ac4c3f83935a78472565.mockapi.io/cart')
+			.then((res) => {
+				setCartItems(res.data);
 			});
 	}, []);
 
+	// Добавление товаров в корзину
 	const onAddToCart = (obj) => {
+		// Сохранение товара на сервере
+		axios.post(
+			'https://6342ac4c3f83935a78472565.mockapi.io/cart',
+			obj,
+		);
+		// Добавление объекта в массив cartItems
 		setCartItems((prev) => [...prev, obj]);
 	};
 
+	// Удаление товара из корзины
+	const onRemoveItem = (id) => {
+		axios.delete(
+			`https://6342ac4c3f83935a78472565.mockapi.io/cart${id}`,
+		);
+		setCartItems((prev) => prev.filter((item) => item.id !== id));
+	};
+
+	// Поиск товара
 	const onChangeSearchInput = (event) => {
-		setSearchValue();
+		setSearchValue(event.target.value);
 	};
 
 	return (
@@ -34,6 +55,7 @@ function App() {
 				<Drawer
 					items={cartItems}
 					onClose={() => setCartOpened(false)}
+					onRemove={onRemoveItem}
 				/>
 			)}
 
@@ -41,24 +63,42 @@ function App() {
 
 			<div className='content p-40'>
 				<div className='d-flex align-center mb-40 justify-between'>
-					<h1>Все кроссовки</h1>
+					<h1>
+						{searchValue
+							? `Поиск по закпросу: "${searchValue}"`
+							: `Все кросовки`}
+					</h1>
 					<div className='search-block'>
 						<FaSearch className='search-icon' />
-						<input placeholder='Поиск...' />
+						{searchValue && (
+							<FaTimes
+								onClick={() => setSearchValue('')}
+								className='clear remove-icon'
+							/>
+						)}
+						<input
+							onChange={onChangeSearchInput}
+							placeholder='Поиск...'
+							value={searchValue}
+						/>
 					</div>
 				</div>
 
 				<div className='content-wrapper'>
-					{items.map((item, index) => (
-						<Card
-							key={index}
-							title={item.title}
-							price={item.price}
-							imageUrl={item.imageUrl}
-							onPlus={(obj) => onAddToCart(obj)}
-							onFavorite={() => console.log('нажали на favorite')}
-						/>
-					))}
+					{items
+						.filter((item) =>
+							item.title.toLowerCase().includes(searchValue),
+						)
+						.map((item, index) => (
+							<Card
+								key={index}
+								title={item.title}
+								price={item.price}
+								imageUrl={item.imageUrl}
+								onPlus={(obj) => onAddToCart(obj)}
+								onFavorite={() => console.log('нажали на favorite')}
+							/>
+						))}
 				</div>
 			</div>
 		</div>

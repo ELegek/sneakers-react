@@ -2,7 +2,7 @@ import React from 'react';
 import { FaTimes, FaArrowRight } from 'react-icons/fa';
 import styles from './Drawer.module.scss';
 
-function Drawer({ onClose, items = [] }) {
+function Drawer({ onRemove, onClose, items = [] }) {
 	return (
 		<div className={styles.overlay}>
 			<div className={styles.drawer}>
@@ -24,7 +24,9 @@ function Drawer({ onClose, items = [] }) {
 								<p>{obj.title}</p>
 								<b>{obj.price} руб.</b>
 							</div>
-							<button className={styles.btnRemove}>
+							<button
+								onClick={() => onRemove(obj.id)}
+								className={styles.btnRemove}>
 								<FaTimes className={styles.removeIcon} />
 							</button>
 						</div>
