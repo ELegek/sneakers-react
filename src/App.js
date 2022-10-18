@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { FaSearch, FaTimes } from 'react-icons/fa';
+
+// Библиотеки
+import { Routes, Route, Link } from 'react-router-dom';
 import axios from 'axios';
-import Card from './components/Card';
+
+// Компоненты
 import Drawer from './components/Drawer';
 import Header from './components/Header';
+
+// Страницы
+import Home from './pages/Home';
+import Favorites from './pages/Favorites';
 
 function App() {
 	const [items, setItems] = useState([]);
@@ -22,6 +29,12 @@ function App() {
 		// Получение пустого массива корзины с сервера
 		axios
 			.get('https://6342ac4c3f83935a78472565.mockapi.io/cart')
+			.then((res) => {
+				setCartItems(res.data);
+			});
+		// Получение избранных карточек товара с сервера
+		axios
+			.get('https://6342ac4c3f83935a78472565.mockapi.io/favorites')
 			.then((res) => {
 				setCartItems(res.data);
 			});
@@ -47,14 +60,28 @@ function App() {
 	};
 
 	// Добавление товаров в избранное
-	const onAddToFavorite = (obj) => {
-		// Сохранение товара на сервере
-		axios.post(
-			'https://6342ac4c3f83935a78472565.mockapi.io/favorites',
-			obj,
-		);
-		// Добавление объекта в массив favorites
-		setFavorites((prev) => [...prev, obj]);
+	const onAddToFavorite = async (obj) => {
+		try {
+			if (favorites.find((favObj) => favObj.id === obj.id)) {
+				axios.delete(
+					`https://6342ac4c3f83935a78472565.mockapi.io/favorites/${obj.id}`,
+				);
+				setFavorites((prev) =>
+					prev.filter((item) => item.id !== obj.id),
+				);
+			} else {
+				// Сохранение товара на сервере
+				const { data } = await axios.post(
+					'https://6342ac4c3f83935a78472565.mockapi.io/favorites',
+					obj,
+				);
+
+				// Добавление объекта в массив favorites
+				setFavorites((prev) => [...prev, data]);
+			}
+		} catch (error) {
+			alert('Не удалось добавить в фавориты');
+		}
 	};
 
 	// Удаление товара из корзины из сервера и из реакта
@@ -81,48 +108,34 @@ function App() {
 			)}
 
 			<Header onClickCart={() => setCartOpened(true)} />
-
-			<div className='content p-40'>
-				<div className='d-flex align-center mb-40 justify-between'>
-					<h1>
-						{searchValue
-							? `Поиск по закпросу: "${searchValue}"`
-							: `Все кросовки`}
-					</h1>
-					<div className='search-block'>
-						<FaSearch className='search-icon' />
-						{searchValue && (
-							<FaTimes
-								onClick={() => setSearchValue('')}
-								className='clear remove-icon'
-							/>
-						)}
-						<input
-							onChange={onChangeSearchInput}
-							placeholder='Поиск...'
-							value={searchValue}
+			<Routes>
+				<Route
+					path='/'
+					exact
+					element={
+						<Home
+							items={items}
+							searchValue={searchValue}
+							setSearchValue={setSearchValue}
+							onChangeSearchInput={onChangeSearchInput}
+							onAddToFavorite={onAddToFavorite}
+							onRemoveFavorite={onRemoveFavorite}
+							onAddToCart={onAddToCart}
 						/>
-					</div>
-				</div>
+					}
+				/>
 
-				<div className='content-wrapper'>
-					{items
-						.filter((item) =>
-							item.title.toLowerCase().includes(searchValue),
-						)
-						.map((item, index) => (
-							<Card
-								key={index}
-								title={item.title}
-								price={item.price}
-								imageUrl={item.imageUrl}
-								onPlus={(obj) => onAddToCart(obj)}
-								onFavorite={(obj) => onAddToFavorite(obj)}
-								removeFavorite={onRemoveFavorite}
-							/>
-						))}
-				</div>
-			</div>
+				<Route
+					path='/favorites'
+					exact
+					element={
+						<Favorites
+							items={favorites}
+							onAddToFavorite={onAddToFavorite}
+						/>
+					}
+				/>
+			</Routes>
 		</div>
 	);
 }

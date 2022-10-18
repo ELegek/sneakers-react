@@ -10,19 +10,21 @@ import style from './Header.module.scss';
 function Header(props) {
 	return (
 		<header className='d-flex justify-between align-center p-40'>
-			<div className='d-flex align-center'>
-				<img
-					width={40}
-					height={40}
-					src='/img/logo.png'
-					alt='logo'
-					className='mr-15'
-				/>
-				<div>
-					<h3 className='text-uppercase'>REACT SNEAKERS</h3>
-					<p>Магазин лучших кроссовок</p>
+			<Link to='/'>
+				<div className='d-flex align-center'>
+					<img
+						width={40}
+						height={40}
+						src='/img/logo.png'
+						alt='logo'
+						className='mr-15'
+					/>
+					<div>
+						<h3 className='text-uppercase'>REACT SNEAKERS</h3>
+						<p>Магазин лучших кроссовок</p>
+					</div>
 				</div>
-			</div>
+			</Link>
 			<ul className='d-flex'>
 				<li onClick={props.onClickCart} className='mr-30 cu-p'>
 					<FaShoppingCart className='icon' />
