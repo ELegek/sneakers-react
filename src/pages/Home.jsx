@@ -4,12 +4,10 @@ import { FaSearch, FaTimes } from 'react-icons/fa';
 
 function Home({
 	items,
-	cartItems,
 	searchValue,
 	setSearchValue,
 	onChangeSearchInput,
 	onAddToFavorite,
-	onRemoveFavorite,
 	onAddToCart,
 	isLoading,
 }) {
@@ -23,7 +21,6 @@ function Home({
 				key={index}
 				onPlus={(obj) => onAddToCart(obj)}
 				onFavorite={(obj) => onAddToFavorite(obj)}
-				added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
 				loading={isLoading}
 				{...item}
 			/>
