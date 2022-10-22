@@ -1,16 +1,18 @@
 import React from 'react';
 import axios from 'axios';
+
 import { FaTimes, FaArrowRight } from 'react-icons/fa';
 import styles from './Drawer.module.scss';
-import Info from '../Info';
-import AppContext from '../../context';
 
-function Drawer({ onRemove, onClose, items = [] }) {
-	const { cartItems, setCartItems } = React.useContext(AppContext);
+import Info from '../Info';
+import { useCart } from '../../hook/useCart';
+
+function Drawer({ onRemove, onClose, items = [], opened }) {
+	// Кастомный хук
+	const { cartItems, setCartItems, totalPrice } = useCart();
 	const [orderId, setOrderId] = React.useState(null);
 	const [isOrderComplete, setIsOrderComplete] = React.useState(false);
 	const [isLoading, setIsLoading] = React.useState(false);
-	const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
 
 	const onClickOrder = async () => {
 		try {
@@ -19,7 +21,7 @@ function Drawer({ onRemove, onClose, items = [] }) {
 				'https://6342ac4c3f83935a78472565.mockapi.io/orders',
 				{ items: cartItems },
 			);
-			await axios.put('https://6342ac4c3f83935a78472565.mockapi.io/cart', []);
+			await axios.post('https://6342ac4c3f83935a78472565.mockapi.io/cart', []);
 			setOrderId(data.id);
 			setIsOrderComplete(true);
 			setCartItems([]);
@@ -29,8 +31,8 @@ function Drawer({ onRemove, onClose, items = [] }) {
 		setIsLoading(false);
 	};
 	return (
-		<div className={styles.overlay}>
-			<div className={styles.drawer}>
+		<div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
+			<div className={`${styles.drawer} ${opened ? styles.drawerVisible : ''}`}>
 				<div className={styles.drawerHeader}>
 					<h2>Корзина</h2>
 					<button onClick={onClose} className={styles.btnRemove}>

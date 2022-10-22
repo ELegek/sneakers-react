@@ -2,12 +2,11 @@ import React from 'react';
 import { FaShoppingCart, FaUserCircle, FaRegHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import style from './Header.module.scss';
-import AppContext from '../../context';
+import { useCart } from '../../hook/useCart';
 
 function Header(props) {
-	const { cartItems } = React.useContext(AppContext);
-
-	const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
+	// Кастомный хук
+	const { totalPrice } = useCart();
 
 	return (
 		<header className='d-flex justify-between align-center p-40'>
@@ -31,7 +30,9 @@ function Header(props) {
 					</Link>
 				</li>
 				<li>
-					<FaUserCircle className='icon' />
+					<Link to='/orders'>
+						<FaUserCircle className='icon' />
+					</Link>
 				</li>
 			</ul>
 		</header>

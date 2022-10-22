@@ -9,9 +9,21 @@
 	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 10;
 	overflow: hidden;
-	// display: none;
+
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.3s ease 0s;
 }
+
+.overlayVisible {
+	visibility: visible;
+	opacity: 1;
+	transition: all 0.3s ease 0s;
+	overflow: hidden;
+}
+
 .drawer {
+	overflow: hidden;
 	position: absolute;
 	width: 420px;
 	height: 100%;
@@ -27,6 +39,13 @@
 
 	background: #ffffff;
 	box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+	transform: translate(100%, 0px);
+	transition: all 0.3s ease 0s;
+}
+
+.drawerVisible {
+	transition: all 0.3s ease 0s;
+	transform: translate(0px, 0px);
 }
 
 .drawerHeader {
